@@ -16,7 +16,7 @@ class ProductController extends Controller
         //y3rd kol el data
         //$product =product::all();
         // y3rd kol data bas ba5er 7aga 3rdha el awl m3 a5tyrat 3add page el yzhar feha data
-        $product =Product::latest()-> paginate(3);
+        $products = Product::latest()->paginate(4);
         return view('product.index',compact('products'));
     }
 
@@ -44,7 +44,7 @@ class ProductController extends Controller
             'price'=>'required'
         ]);
         $product =Product::create($request->all());
-        return redirect()->route('product.index')->with('success','product add successly');
+        return redirect()->route('products.index')->with('success','product add successly');
     }
 
     /**
@@ -83,7 +83,7 @@ class ProductController extends Controller
             'price'=>'required'
         ]);
         $product =Product::update($request->all());
-        return redirect()->route('product.index')->with('success','product updated successly');
+        return redirect()->route('products.index')->with('success','product updated successly');
     }
 
     /**
@@ -95,6 +95,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete;
-        return redirect()->route('product.index')->with('success','product deleted successly');
+        return redirect()->route('products.index')->with('success','product deleted successly');
     }
 }

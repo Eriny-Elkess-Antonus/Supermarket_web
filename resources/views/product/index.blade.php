@@ -17,8 +17,8 @@
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">product name</th>
-      <th scope="col">product price</th>
+      <th scope="col">Product name</th>
+      <th scope="col">Product price</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -26,12 +26,21 @@
     @foreach($products as $item)
     <tr>
       <th scope="row">{{++$i}}</th>
-      <td>{{item->name}}</td>
-      <td>{{item->price}}</td>
-      <td>@mdo</td>
+      <td>{$item->name}}</td>
+      <td>{{$item->price}}</td>
+      <td>
+        <a href="{{route('products.edit')}}"></a>
+        <a href="{{route('products.show')}}"></a>
+        <form action="{{route('products.destroy',$item->id )}}">
+          @csrf
+          @method('delete')
+          <button>type="submit" class="btn btn-danger"</button>
+        </form>
+      </td>
     </tr>
     @endforeach
   </tbody>
 </table>
+{!! $products->links() !!}
 </div>
 @endsection
