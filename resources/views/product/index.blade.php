@@ -6,11 +6,21 @@
 @section('content')
 
 <div class="jumbotron container">
-  <h1 class="display-4">Hello, world!</h1>
-  <hr class="my-4">
+  
   <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
   <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
 </div>
+
+
+<div class="container">
+      @if ($message = Session::get('success'))
+      <div class="alert alert-primary" role="alert">
+        {{$message}}
+        </div>
+      @endif
+
+  </div>
+
 
 <div class="container"> 
 <table class="table">
@@ -19,28 +29,53 @@
       <th scope="col">#</th>
       <th scope="col">Product name</th>
       <th scope="col">Product price</th>
-      <th scope="col">Actions</th>
+      <th scope="col" style="width: 400px">Actions</th>
     </tr>
   </thead>
   <tbody>
+  @php
+       $i = 0;
+   @endphp
     @foreach($products as $item)
     <tr>
       <th scope="row">{{++$i}}</th>
-      <td>{$item->name}}</td>
-      <td>{{$item->price}}</td>
+      <td>{{$item->name}}</td>
+      <td>{{$item->price}} EL </td>
       <td>
-        <a href="{{route('products.edit')}}"></a>
-        <a href="{{route('products.show')}}"></a>
-        <form action="{{route('products.destroy',$item->id )}}">
-          @csrf
-          @method('delete')
-          <button>type="submit" class="btn btn-danger"</button>
-        </form>
-      </td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
-{!! $products->links() !!}
-</div>
+        
+      <div class="row">
+                        <div class="col-sm">
+                            <a  class="btn btn-success" href="{{ route('products.edit',$item->id)}}"> Edit </a>
+
+                        </div>
+                        <div class="col-sm">
+                            <a  class="btn btn-primary" href="{{ route('products.show',$item->id)}}"> Show</a>
+
+                        </div>
+
+                        <div class="col-sm">
+                            <a  class="btn btn-warning" href="{{ route('soft.delete',$item->id)}}"> Soft delete </a>
+
+                        </div>
+{{--
+                        <div class="col-sm">
+                            <form action="{{ route('products.destroy',$item->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"> Delete</button>
+                                </form>
+                        </div> --}}
+                      </div>
+
+
+                </td>
+              </tr>
+            @endforeach
+
+        </tbody>
+      </table>
+
+     {!! $products->links() !!}
+  </div>
+
 @endsection

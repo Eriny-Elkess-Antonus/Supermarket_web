@@ -19,5 +19,6 @@ Route::get('/', function () {
 });
   
 
-
 Route ::resource('products',ProductController::class);
+Route::get('product/soft/delete/{id}', ProductController::class, 'soft.delete' )
+->name('soft.delete');

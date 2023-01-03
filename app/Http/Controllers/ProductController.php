@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -41,10 +41,12 @@ class ProductController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'price'=>'required'
+            'price'=>'required',
+            'detail'=>'required'
         ]);
         $product =Product::create($request->all());
-        return redirect()->route('products.index')->with('success','product add successly');
+        return redirect()->route('products.index')
+        ->with('success','product added successflly');
     }
 
     /**
@@ -82,7 +84,7 @@ class ProductController extends Controller
             'name'=>'required',
             'price'=>'required'
         ]);
-        $product =Product::update($request->all());
+        $product->update($request->all());
         return redirect()->route('products.index')->with('success','product updated successly');
     }
 
@@ -96,5 +98,15 @@ class ProductController extends Controller
     {
         $product->delete;
         return redirect()->route('products.index')->with('success','product deleted successly');
+    }
+
+
+    public function softDelete(  $id)
+    {
+
+        $product = Product::find($id)->delete();
+
+        return redirect()->route('products.index')
+        ->with('success','product deleted successflly') ;
     }
 }
